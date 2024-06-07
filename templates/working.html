@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Budget Entry</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a3d;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #141432;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .entry-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #141432;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            background: #1a1a3d;
+            border: 1px solid #7d1aff;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #7d1aff;
+            border-color: #7d1aff;
+        }
+
+        .btn-primary:hover {
+            background-color: #6b14e2;
+            border-color: #6b14e2;
+        }
+    </style>
+</head>
+<body>
+    {{name}}
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Budget Tracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="index.html">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container entry-container">
+        <h2 class="text-center">Daily Budget Entry</h2>
+        <form id="budget-form">
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="budget">Budget Amount</label>
+                <input type="number" class="form-control" id="budget" placeholder="Enter your daily budget" required>
+            </div>
+            <div id="expenses-container">
+                <div class="form-group expense-entry">
+                    <label for="expense-detail">Expense Detail</label>
+                    <input type="text" class="form-control" id="expense-detail" placeholder="Enter expense detail" required>
+                </div>
+                <div class="form-group expense-entry">
+                    <label for="expense-amount">Expense Amount</label>
+                    <input type="number" class="form-control" id="expense-amount" placeholder="Enter expense amount" required>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-block" id="add-expense">Add Another Expense</button>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('add-expense').addEventListener('click', function() {
+            const expenseContainer = document.getElementById('expenses-container');
+            const expenseEntries = expenseContainer.getElementsByClassName('expense-entry');
+
+            let allFilled = true;
+            for (let entry of expenseEntries) {
+                const input = entry.getElementsByTagName('input')[0];
+                if (input.value.trim() === '') {
+                    allFilled = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            }
+
+            if (allFilled) {
+                const newExpenseDetail = document.createElement('div');
+                newExpenseDetail.classList.add('form-group', 'expense-entry');
+                newExpenseDetail.innerHTML = '<label for="expense-detail">Expense Detail</label><input type="text" class="form-control" placeholder="Enter expense detail" required>';
+                expenseContainer.appendChild(newExpenseDetail);
+
+                const newExpenseAmount = document.createElement('div');
+                newExpenseAmount.classList.add('form-group', 'expense-entry');
+                newExpenseAmount.innerHTML = '<label for="expense-amount">Expense Amount</label><input type="number" class="form-control" placeholder="Enter expense amount" required>';
+                expenseContainer.appendChild(newExpenseAmount);
+            } else {
+                alert('Please fill out all expense details and amounts before adding another expense.');
+            }
+        });
+
+        document.getElementById('budget-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+            // You can add validation or AJAX requests here if needed
+            // window.location.href = 'dashboard.html'; // Redirect to a new page (optional)
+            alert('Form submitted successfully!');
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
