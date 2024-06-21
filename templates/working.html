@@ -4,54 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Budget Entry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            background-color: #1a1a3d;
+            background: radial-gradient(circle at center, #1a1a3d, #3d1a6d);
             color: white;
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .navbar {
-            background-color: #141432;
+            background: transparent;
+            padding: 1rem;
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             font-weight: 600;
             color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .entry-container {
             max-width: 600px;
             margin: 50px auto;
-            background: #141432;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .entry-container:hover {
+            transform: scale(1.05);
+            box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .form-control {
-            background: #1a1a3d;
+            background: transparent;
             border: 1px solid #7d1aff;
             color: white;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(125, 26, 255, 0.5);
         }
 
         .btn-primary {
-            background-color: #7d1aff;
-            border-color: #7d1aff;
+            background-color: #ff9900;
+            border-color: #ff9900;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 0.5rem 2rem;
         }
 
         .btn-primary:hover {
+            background-color: #e68a00;
+            border-color: #e68a00;
+            transform: scale(1.1);
+        }
+
+        .btn-secondary {
+            background-color: #7d1aff;
+            border-color: #7d1aff;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 0.5rem 2rem;
+        }
+
+        .btn-secondary:hover {
             background-color: #6b14e2;
             border-color: #6b14e2;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    {{name}}
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">Budget Tracker</a>
@@ -61,7 +100,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="index.html">Home</a>
+                        <a class="nav-link btn btn-primary" href="{% url 'home' %}">Home</a>
                     </li>
                 </ul>
             </div>
@@ -70,26 +109,22 @@
 
     <div class="container entry-container">
         <h2 class="text-center">Daily Budget Entry</h2>
-        <form id="budget-form">
-            <div class="form-group">
-                <label for="date">Date</label>
-                <input type="date" class="form-control" id="date" required>
-            </div>
-            <div class="form-group">
-                <label for="budget">Budget Amount</label>
-                <input type="number" class="form-control" id="budget" placeholder="Enter your daily budget" required>
+        {% comment %} {{budget}} {% endcomment %}
+        <form id="budget-form" method="post">
+            {% csrf_token %}
+            <div class="box">
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" value="{{ budget.date|date:'Y-m-d' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="budget_amount">Budget Amount</label>
+                    <input type="number" class="form-control" id="budget_amount" name="budget_amount" value={{budget.budget_amount}} placeholder="Enter your daily budget" required>
+                </div>
             </div>
             <div id="expenses-container">
-                <div class="form-group expense-entry">
-                    <label for="expense-detail">Expense Detail</label>
-                    <input type="text" class="form-control" id="expense-detail" placeholder="Enter expense detail" required>
-                </div>
-                <div class="form-group expense-entry">
-                    <label for="expense-amount">Expense Amount</label>
-                    <input type="number" class="form-control" id="expense-amount" placeholder="Enter expense amount" required>
-                </div>
             </div>
-            <button type="button" class="btn btn-secondary btn-block" id="add-expense">Add Another Expense</button>
+            <button type="button" class="btn btn-secondary btn-block" id="add-expense">Add Expense</button>
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>
     </div>
@@ -113,23 +148,16 @@
             if (allFilled) {
                 const newExpenseDetail = document.createElement('div');
                 newExpenseDetail.classList.add('form-group', 'expense-entry');
-                newExpenseDetail.innerHTML = '<label for="expense-detail">Expense Detail</label><input type="text" class="form-control" placeholder="Enter expense detail" required>';
+                newExpenseDetail.innerHTML = '<label for="expense-detail">Expense Detail</label><input type="text" class="form-control" name="expense_detail" placeholder="Enter expense detail" required>';
                 expenseContainer.appendChild(newExpenseDetail);
 
                 const newExpenseAmount = document.createElement('div');
                 newExpenseAmount.classList.add('form-group', 'expense-entry');
-                newExpenseAmount.innerHTML = '<label for="expense-amount">Expense Amount</label><input type="number" class="form-control" placeholder="Enter expense amount" required>';
+                newExpenseAmount.innerHTML = '<label for="expense-amount">Expense Amount</label><input type="number" class="form-control" name="expense_amount" placeholder="Enter expense amount" required>';
                 expenseContainer.appendChild(newExpenseAmount);
             } else {
                 alert('Please fill out all expense details and amounts before adding another expense.');
             }
-        });
-
-        document.getElementById('budget-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting the default way
-            // You can add validation or AJAX requests here if needed
-            // window.location.href = 'dashboard.html'; // Redirect to a new page (optional)
-            alert('Form submitted successfully!');
         });
     </script>
 
