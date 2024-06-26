@@ -1,99 +1,3 @@
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Tracker</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            background-color: #1a1a3d;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-        }
-
-        .navbar {
-            background-color: #141432;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .navbar-nav .nav-link {
-            color: white;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #7d1aff;
-        }
-
-        .section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-
-        .btn-primary {
-            background-color: #7d1aff;
-            border-color: #7d1aff;
-        }
-
-        .btn-primary:hover {
-            background-color: #6b14e2;
-            border-color: #6b14e2;
-        }
-
-        .highlight {
-            border: 2px solid white;
-            padding: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .highlight:hover {
-            transform: scale(1.05);
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Budget Tracker</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mr-2">
-                        <a class="nav-link btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary" href="{% url 'login_user' %}">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <section class="section">
-        <div class="container highlight">
-            <h2 class="section-title">Track Your Expenses</h2>
-            <p>Keep a record of your income and expenses to manage your budget effectively.</p>
-        </div>
-    </section>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>  {% endcomment %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -207,6 +111,15 @@
             transform: scale(1.05);
             box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
         }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            color: white;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -214,7 +127,7 @@
         <div class="container">
             <a class="navbar-brand" href="#">Budget Tracker</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
@@ -240,4 +153,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
