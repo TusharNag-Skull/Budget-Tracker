@@ -55,7 +55,8 @@
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.2);
+            background: white;
+            color: black;
             box-shadow: 0 0 10px rgba(125, 26, 255, 0.5);
         }
 
@@ -111,14 +112,6 @@
             <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
         </form>
     </div>
-
-    {% comment %} <script>
-        document.getElementById('signup-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting the default way
-            // You can add validation or AJAX requests here if needed
-            window.location.href = 'dashboard.html'; // Redirect to a new page
-        });
-    </script> {% endcomment %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

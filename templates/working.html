@@ -55,8 +55,19 @@
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.2);
+            background: white;
+            color: black;
             box-shadow: 0 0 10px rgba(125, 26, 255, 0.5);
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-invalid:focus {
+            background: white;
+            border-color: #dc3545;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
         }
 
         .btn-primary {
